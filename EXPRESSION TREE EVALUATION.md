@@ -1,17 +1,20 @@
-# Ex. No: 15D - Build a Heap Tree Using Python
+# Ex. No: 15E - Build and Evaluate an Expression Tree
 
 ## AIM:
-To write a Python program to build a heap tree using appropriate Python package and function.
+To write a Python program to build and evaluate the given Expression tree.
 
 ---
 
 ## ALGORITHM:
 
 1. **Start the program.**
-2. Import the `heapq` module.
-3. Define a function `heaptree(H)` that takes a list `H` as input.
-4. Use `heapq.heapify(H)` to convert the list into a min-heap.
-5. Print the created heap.
+2. Create nodes for operators and operands.
+3. Build the expression tree by connecting nodes in the correct hierarchical structure.
+4. Define a recursive function `evaluate(root)`:
+   - If the node is a number (leaf), return it.
+   - Else, recursively evaluate left and right subtrees.
+   - Apply the operator at the current node to the results.
+5. Return the final result from the root node.
 6. **End the program.**
 
 ---
@@ -19,26 +22,57 @@ To write a Python program to build a heap tree using appropriate Python package 
 ## PROGRAM:
 
 ```
-Name : John christober 
-Reg No : 212222060098
-from binarytree import heap,build,Node
-def min_max_heap(L): 
-    x=L
-    t=build(x)
-    for i in (t.values):
-        print(i,"-->",end='')
-    if (t.is_complete):
-        print("\nComplete binary tree")
-        if (t.is_max_heap):
-            print("\nMax heap tree")
-        else:
-            print("\nMin heap tree")
-    else:
-        print("\nNot a Complete binary tree")
+Name : John christober
+Reg No: 212222060098
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+ 
+
+def isLeaf(node):
+    return node.left is None and node.right is None
+ 
+def process(op, x, y):
+    if op =='+':
+        return x + y
+    if op == '-':
+        return x - y
+    if op == '*':
+        return x * y
+    if op == '/':
+        return x / y
+ 
+def evaluate(root):
+
+    if root is None:
+        return 0 
+  
+    if isLeaf(root):
+        return float(root.val)
+    
+    x = evaluate(root.left)
+    y = evaluate(root.right)
+    return (process(root.val, x, y))
+    
+
+
+root = Node('+')
+root.left = Node('*')
+root.right= Node('/')
+root.left.left = Node('-')
+root.left.right = Node(5)
+root.right.left = Node(21)
+root.right.right = Node(7)
+root.left.left.left = Node(10)
+root.left.left.right = Node(5)
+ 
+print('The value of the expression tree is',evaluate(root))
 ```
 
-## OUTPUT
-<img width="1126" height="288" alt="image" src="https://github.com/user-attachments/assets/bd0cd462-d6e1-4706-829d-0102cc80e50a" />
+## OUTPUT:
+<img width="1023" height="157" alt="image" src="https://github.com/user-attachments/assets/f0fc82c6-da4b-4f53-99f2-2f4f2c84336e" />
 
-## RESULT
-Thus ,a Python program to build a heap tree using appropriate Python package and function is successfully executed.
+## RESULT:
+Thus the Python program to build and evaluate the given Expression tree was successfully executed.
